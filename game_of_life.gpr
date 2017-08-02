@@ -1,0 +1,17 @@
+with "sigil.gpr";
+
+project Game_Of_Life is
+
+   for Source_Dirs use ("./**");
+   for Main use ("exec.adb");
+   for Source_Files use ("exec.adb");
+
+   package Linker is
+      for Default_Switches ("ada") use ("-lsigil");
+   end Linker;
+
+   for Object_Dir use "build/obj";
+   for Exec_Dir use "build";
+
+end Game_Of_Life;
+
