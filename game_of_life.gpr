@@ -2,16 +2,25 @@ with "sigil.gpr";
 
 project Game_Of_Life is
 
-   for Source_Dirs use ("./**");
+   for Source_Dirs use ("./");
    for Main use ("exec.adb");
    for Source_Files use ("exec.adb");
+   for Object_Dir use "build/obj";
+   for Exec_Dir use "build";
+   type Build_Kind is
+      ("default");
+   Sigil_Build : Build_Kind := external ("SIGIL_BUILD");
+
+   case Sigil_Build is
+
+      when "default" =>
+         for Source_Files use ("entities.adb", "entities.ads", "exec.adb", "graphics.adb", "graphics.ads");
+         for Source_Dirs use (".");
+   end case;
 
    package Linker is
       for Default_Switches ("ada") use ("-lsigil");
    end Linker;
-
-   for Object_Dir use "build/obj";
-   for Exec_Dir use "build";
 
 end Game_Of_Life;
 
