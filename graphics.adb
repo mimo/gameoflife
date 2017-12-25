@@ -36,7 +36,7 @@ package body Graphics is
             if Cells(Col+1,Row+1) = 1 then SIGIL.SetForeColor (0.0, 1.0, 0.0, 1.0);
             else SIGIL.SetForeColor (1.0, 1.0, 1.0, 1.0);
             end if;
-            SIGIL.RectangleFill(Row*Self.CellSize, Col*Self.CellSize, Self.CellSize, Self.CellSize);
+            SIGIL.RectangleFill (Col*Self.CellSize, Row*Self.CellSize, Self.CellSize, Self.CellSize);
          end loop;
       end loop;
    end DrawCells;
