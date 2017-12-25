@@ -1,6 +1,11 @@
 with Sigil;
 
+with Interfaces.C.Strings;
+with sl_h;
+
 package body Graphics is
+
+   package ICS renames Interfaces.C.Strings;
 
    procedure DrawGrid (Self : Grid) is
       Width : constant Positive := Self.CellSize * Self.ColCount;
@@ -10,7 +15,7 @@ package body Graphics is
       Sigil.SetForeColor (0.0, 0.0, 0.0, 1.0);
       for Row in 1..Self.RowCount loop
          Y := Row * Self.CellSize;
-         Sigil.Line (0,Y, Width, Y);
+         Sigil.Line (0, Y, Width, Y);
       end loop;
       for Col in 1..Self.ColCount loop
          X := Col * Self.CellSize;
@@ -28,18 +33,29 @@ package body Graphics is
       return Self.CellSize * Self.RowCount;
    end Height;
 
-   procedure DrawCells (Self : Grid; Cells : Entities.GridArray) is
+   procedure DrawCells (Self : Grid ; Cells : Entities.GridArray ; Value : Entities.NeighbourhoodArray) is
       use Entities;
+      fontID : Interfaces.C.Int;
+      FontSize : Positive := 12;
+      Padding : Natural := (Self.CellSize-FontSize) / 2;
    begin
-      for Col in 0..Self.ColCount-1 loop
-         for Row in 0..Self.RowCount-1 loop
-            if Cells(Col+1,Row+1) = 1 then SIGIL.SetForeColor (0.0, 1.0, 0.0, 1.0);
+      fontID := sl_h.slLoadFont(fontFilename => ICS.New_Char_Array("font.ttf"));
+      sl_h.slSetFont (fontID, Interfaces.C.int(FontSize));
+
+      for Col in 1..Self.ColCount loop
+         for Row in 1..Self.RowCount loop
+            if Cells (Col, Row) = 1
+            then SIGIL.SetForeColor (0.0, 1.0, 0.0, 1.0);
             else SIGIL.SetForeColor (1.0, 1.0, 1.0, 1.0);
             end if;
-            SIGIL.RectangleFill (Col*Self.CellSize, Row*Self.CellSize, Self.CellSize, Self.CellSize);
+            SIGIL.RectangleFill ((Col-1)*Self.CellSize, (Row-1)*Self.CellSize, Self.CellSize, Self.CellSize);
+
+            SIGIL.SetForeColor (0.0, 0.0, 0.0, 1.0);
+            SIGIL.Text (x    => Float((Col-1)*Self.CellSize),
+                        y    => Float((Row-1)*Self.CellSize + Padding),
+                        Text => Value(Col, Row)'Image );
          end loop;
       end loop;
    end DrawCells;
-
 
 end Graphics;

@@ -16,11 +16,36 @@ project Game_Of_Life is
       when "default" =>
          for Source_Files use ("entities.adb", "entities.ads", "exec.adb", "graphics.adb", "graphics.ads");
          for Source_Dirs use (".");
+         for Runtime ("ada") use "native";
    end case;
 
    package Linker is
       for Default_Switches ("ada") use ("-lsigil");
+
+      case Sigil_Build is
+
+         when "default" =>
+            for Default_Switches ("ada") use ("-lsigil", "-g");
+      end case;
    end Linker;
+
+   package Compiler is
+
+      case Sigil_Build is
+
+         when "default" =>
+            for Switches ("ada") use ("-gnat12", "-g");
+      end case;
+   end Compiler;
+
+   package Builder is
+
+      case Sigil_Build is
+
+         when "default" =>
+            for Switches ("ada") use ("-g");
+      end case;
+   end Builder;
 
 end Game_Of_Life;
 

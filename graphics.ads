@@ -9,9 +9,9 @@ package Graphics is
    end record;
    
    procedure DrawGrid (Self : Grid);
-   function Width (Self : Grid) return Positive;
-   function Height (Self : Grid) return Positive;
+   function  Width (Self : Grid) return Positive;
+   function  Height (Self : Grid) return Positive;
    
-   procedure DrawCells (Self : Grid; Cells : Entities.GridArray);
+   procedure DrawCells (Self : Grid; Cells : Entities.GridArray; Value : Entities.NeighbourhoodArray);
    
 end Graphics;
