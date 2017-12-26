@@ -33,27 +33,19 @@ package body Graphics is
       return Self.CellSize * Self.RowCount;
    end Height;
 
-   procedure DrawCells (Self : Grid ; Cells : Entities.GridArray ; Value : Entities.NeighbourhoodArray) is
+   procedure DrawCells (Self : Grid ; Cells : Entities.GridArray) is
       use Entities;
-      fontID : Interfaces.C.Int;
-      FontSize : Positive := 12;
-      Padding : Natural := (Self.CellSize-FontSize) / 2;
    begin
-      fontID := sl_h.slLoadFont(fontFilename => ICS.New_Char_Array("font.ttf"));
-      sl_h.slSetFont (fontID, Interfaces.C.int(FontSize));
-
       for Col in 1..Self.ColCount loop
          for Row in 1..Self.RowCount loop
             if Cells (Col, Row) = 1
             then SIGIL.SetForeColor (0.0, 1.0, 0.0, 1.0);
             else SIGIL.SetForeColor (1.0, 1.0, 1.0, 1.0);
             end if;
-            SIGIL.RectangleFill ((Col-1)*Self.CellSize, (Row-1)*Self.CellSize, Self.CellSize, Self.CellSize);
-
-            SIGIL.SetForeColor (0.0, 0.0, 0.0, 1.0);
-            SIGIL.Text (x    => Float((Col-1)*Self.CellSize),
-                        y    => Float((Row-1)*Self.CellSize + Padding),
-                        Text => Value(Col, Row)'Image );
+            SIGIL.RectangleFill (x => (Col-1)*Self.CellSize,
+                                 y => (Row-1)*Self.CellSize,
+                                 Width  => Self.CellSize,
+                                 Height => Self.CellSize);
          end loop;
       end loop;
    end DrawCells;

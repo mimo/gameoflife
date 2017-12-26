@@ -12,6 +12,6 @@ package Graphics is
    function  Width (Self : Grid) return Positive;
    function  Height (Self : Grid) return Positive;
    
-   procedure DrawCells (Self : Grid; Cells : Entities.GridArray; Value : Entities.NeighbourhoodArray);
+   procedure DrawCells (Self : Grid; Cells : Entities.GridArray);
    
 end Graphics;

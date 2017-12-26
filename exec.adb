@@ -12,7 +12,6 @@ procedure Exec is
 
    Place : Gfx.Grid := (CellSize => 24, RowCount => 29, ColCount=> 49);
    Cells : Entities.GridArray := Entities.Populate (Place.ColCount, Place.RowCount);
-   Neighbours : Entities.NeighbourhoodArray (1..Place.ColCount, 1..Place.RowCount);
 
 begin
 
@@ -23,15 +22,15 @@ begin
 
    SIGIL.SetBackColor (0.3, 0.3, 0.3);
 
-   Neighbours := Entities.Get_Neighbours (Cells);
-
    while not SIGIL.ShouldClose loop
-      delay 0.3;
+      delay 0.8;
 
-      Gfx.DrawCells (Place, Cells, Neighbours);
+      Gfx.DrawCells (Place, Cells);
       Gfx.DrawGrid  (Place);
 
       SIGIL.Render;
+
+      Entities.Apply_Rules (Cells);
    end loop;
 
    SIGIL.Close;

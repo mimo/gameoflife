@@ -14,6 +14,23 @@ package body Entities is
       return Grid;
    end Populate;
 
+   procedure Apply_Rules (Matrix : in out GridArray) is
+         Neighbours : NeighbourhoodArray := Get_Neighbours(Matrix);
+   begin
+      for x in Matrix'range (1) loop
+         for y in Matrix'Range (2) loop
+            if Matrix (x, y) = 1 then
+               Matrix (x, y) := (case Neighbours (x, y) is
+                                    when 0..1 => 0,
+                                    when 2..3 => 1,
+                                    when 4..8 => 0);
+            else
+               Matrix (x, y) := (if Neighbours (x, y) = 3 then 1 else 0);
+            end if;
+         end loop;
+      end loop;
+   end Apply_Rules;
+
    function Get_Neighbours (Matrix : GridArray) return NeighbourhoodArray is
       Neighbours : NeighbourhoodArray (Matrix'range, Matrix'Range (2));
    begin
