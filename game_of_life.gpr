@@ -1,50 +1,24 @@
-with "sigil.gpr";
+with "../raylib-Ada/raylib.gpr";
 
 project Game_Of_Life is
 
    for Source_Dirs use ("./");
    for Main use ("exec.adb");
-   for Source_Files use ("exec.adb");
    for Object_Dir use "build/obj";
    for Exec_Dir use "build";
-   type Build_Kind is
-      ("default");
-   Sigil_Build : Build_Kind := external ("SIGIL_BUILD");
-
-   case Sigil_Build is
-
-      when "default" =>
-         for Source_Files use ("entities.adb", "entities.ads", "exec.adb", "graphics.adb", "graphics.ads");
-         for Source_Dirs use (".");
-         for Runtime ("ada") use "native";
-   end case;
-
-   package Linker is
-      for Default_Switches ("ada") use ("-lsigil");
-
-      case Sigil_Build is
-
-         when "default" =>
-            for Default_Switches ("ada") use ("-lsigil", "-g");
-      end case;
-   end Linker;
+   for Source_Files use ("entities.adb", "entities.ads", "exec.adb", "graphics.adb", "graphics.ads");
+   for Source_Dirs use (".");
 
    package Compiler is
-
-      case Sigil_Build is
-
-         when "default" =>
-            for Switches ("ada") use ("-gnat12", "-g");
-      end case;
+      for Switches ("ada") use ("-gnat12", "-g");
    end Compiler;
 
+   package Linker is
+     for Default_Switches ("ada") use ("-lraylib", "-g");
+   end Linker;
+
    package Builder is
-
-      case Sigil_Build is
-
-         when "default" =>
-            for Switches ("ada") use ("-g");
-      end case;
+      for Switches ("ada") use ("-g");
    end Builder;
 
 end Game_Of_Life;

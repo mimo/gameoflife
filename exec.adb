@@ -1,6 +1,5 @@
-with sl_h;
-with Sigil;
 with Interfaces.C.Strings;
+with raylib;
 
 with Graphics;
 with Entities;
@@ -15,24 +14,28 @@ procedure Exec is
 
 begin
 
-   Sigil.Window (Gfx.Width (Place),
-                 Gfx.Height (Place),
-                 "Game Of Life",
-                 False);
+   raylib.Window.init (
+      Gfx.Width (Place),
+      Gfx.Height (Place),
+      "Game Of Life");
 
-   SIGIL.SetBackColor (0.3, 0.3, 0.3);
+   while not raylib.window.should_close loop
+   
+      raylib.begin_drawing;
+      raylib.clear_background (raylib.RAYWHITE);
+      
 
-   while not SIGIL.ShouldClose loop
-      delay 0.8;
 
       Gfx.DrawCells (Place, Cells);
       Gfx.DrawGrid  (Place);
 
-      SIGIL.Render;
+      raylib.end_drawing;
 
       Entities.Apply_Rules (Cells);
+      delay 0.8;
+      
    end loop;
 
-   SIGIL.Close;
+   raylib.window.close;
 
 end Exec;
