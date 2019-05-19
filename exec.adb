@@ -1,4 +1,3 @@
-with Interfaces.C.Strings;
 with raylib;
 
 with Graphics;
@@ -6,7 +5,6 @@ with Entities;
 
 procedure Exec is
 
-   use type Interfaces.C.int;
    package Gfx renames Graphics;
 
    Place : Gfx.Grid := (CellSize => 24, RowCount => 29, ColCount=> 49);
@@ -20,11 +18,9 @@ begin
       "Game Of Life");
 
    while not raylib.window.should_close loop
-   
+
       raylib.begin_drawing;
       raylib.clear_background (raylib.RAYWHITE);
-      
-
 
       Gfx.DrawCells (Place, Cells);
       Gfx.DrawGrid  (Place);
@@ -33,7 +29,7 @@ begin
 
       Entities.Apply_Rules (Cells);
       delay 0.8;
-      
+
    end loop;
 
    raylib.window.close;
