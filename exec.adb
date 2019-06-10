@@ -13,22 +13,22 @@ procedure Exec is
 begin
 
    raylib.Window.init (
-      Gfx.Width (Place),
+      Gfx.Width  (Place),
       Gfx.Height (Place),
       "Game Of Life");
+
+   raylib.set_target_FPS (2);
 
    while not raylib.window.should_close loop
 
       raylib.begin_drawing;
       raylib.clear_background (raylib.RAYWHITE);
 
-      Gfx.DrawCells (Place, Cells);
-      Gfx.DrawGrid  (Place);
+      Gfx.Draw (Place, Cells);
 
       raylib.end_drawing;
 
       Entities.Apply_Rules (Cells);
-      delay 0.8;
 
    end loop;
 

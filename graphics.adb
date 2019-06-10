@@ -35,7 +35,7 @@ package body Graphics is
       return Self.CellSize * Self.RowCount;
    end Height;
 
-   procedure DrawCells (Self : Grid ; Cells : Entities.GridArray) is
+   procedure Draw (Self : Grid ; Cells : Entities.GridArray) is
       use Entities;
       use raylib;
       cell_color : raylib.Color;
@@ -53,6 +53,8 @@ package body Graphics is
                                           c => cell_color);
          end loop;
       end loop;
-   end DrawCells;
+
+      DrawGrid (self);
+   end Draw;
 
 end Graphics;

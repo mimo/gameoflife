@@ -1,8 +1,18 @@
+with Ada.Numerics.Discrete_Random ;
 
 package body Entities is
 
+   package CellValueRandom is new Ada.Numerics.Discrete_Random (CellValue);
+   
+   type Neighbourhood is range 0..8;
+   type NeighbourhoodArray is array (Positive range <>, Positive range <>) of Neighbourhood;
+   
+   function Get_Neighbours (Matrix : GridArray) return NeighbourhoodArray;
+   function Count_Neighbours (Matrix : GridArray; CellX, CellY : Positive) return Neighbourhood;
+
    function Populate (X, Y : Positive) return GridArray is
       Grid : GridArray (1..X, 1..Y);
+      CellValueGenerator : CellValueRandom.Generator; 
    begin
       for Col in 1..X loop
          CellValueRandom.Reset (CellValueGenerator);

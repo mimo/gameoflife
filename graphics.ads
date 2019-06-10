@@ -8,10 +8,9 @@ package Graphics is
       ColCount : Positive := 10;
    end record;
    
-   procedure DrawGrid (Self : Grid);
    function  Width (Self : Grid) return Positive;
    function  Height (Self : Grid) return Positive;
    
-   procedure DrawCells (Self : Grid; Cells : Entities.GridArray);
+   procedure Draw (Self : Grid; Cells : Entities.GridArray);
    
 end Graphics;
