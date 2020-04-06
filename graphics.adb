@@ -7,19 +7,19 @@ package body Graphics is
 
    procedure DrawGrid (Self : Grid) is
       use raylib;
-      matrix_width  : constant C_float := C_float (Self.CellSize * Self.ColCount);
-      matrix_height : constant C_float := C_float (Self.CellSize * Self.RowCount);
+      matrix_width  : constant float := float (Self.CellSize * Self.ColCount);
+      matrix_height : constant float := float (Self.CellSize * Self.RowCount);
       grid_color : raylib.Color := (30, 30, 30, 255);
       line_start, line_end : raylib.Vector2;
 
    begin
       for Row in 0..Self.RowCount loop
-         line_start := (0.0, C_float(Row * Self.CellSize));
+         line_start := (0.0, float(Row * Self.CellSize));
          line_end := (matrix_width, line_start.y);
          raylib.shapes.draw_line_ex (line_start, line_end, 2.0, grid_color);
       end loop;
       for Col in 0..Self.ColCount loop
-         line_start := (C_float(Col * Self.CellSize), 0.0);
+         line_start := (float(Col * Self.CellSize), 0.0);
          line_end := (line_start.x, matrix_height);
          raylib.shapes.draw_line_ex (line_start, line_end, 2.0, grid_color);
       end loop;
